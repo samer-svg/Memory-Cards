@@ -1,6 +1,6 @@
 # 🧠 Memory Card Matching Game
 
-![Gameplay Demo]("C:\Users\samer\Downloads\game-demo.jpg")
+![game-demo](https://github.com/user-attachments/assets/13f5a2e6-6cf3-4fb1-b1b5-b2f518d32774)
 
 A classic memory challenge game built with vanilla JavaScript. Flip cards, find matches, and test your concentration!
 
