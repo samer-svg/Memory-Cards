@@ -1,17 +1,49 @@
-# 🧠 Memory Card Matching Game
+# Memory Card Game - Enhanced Version
 
-![game-demo](https://github.com/user-attachments/assets/13f5a2e6-6cf3-4fb1-b1b5-b2f518d32774)
-
-A classic memory challenge game built with vanilla JavaScript. Flip cards, find matches, and test your concentration!
+A modern, responsive, and accessible memory card game built with vanilla JavaScript, HTML, and CSS.
 
 ## ✨ Features
-- **Smooth animations**: Card flips + shake effects
-- **Auto-reset**: Shuffles cards when all matches are found
-- **Smart logic**: Prevents clicks during animations
-- **Responsive design**: Works on all devices
 
-## 🎮 How to Play
-1. Click any card to flip it
-2. Find its matching pair
-3. Match all 8 pairs to win
-4. Game automatically reshuffles after winning
+### 🎮 Game Features
+- **16 cards (8 pairs)** with beautiful card flip animations
+- **Smart card matching** with visual feedback
+- **Move counter** to track your performance
+- **Game timer** to measure completion time
+- **Auto-restart** after completing the game
+- **Keyboard navigation** for accessibility
+
+### 🎨 Visual Enhancements
+- **Modern gradient green background** with subtle animations
+- **Glassmorphism design** with backdrop blur effects
+- **Smooth card flip animations** using CSS transforms
+- **Success and error animations** for better user feedback
+- **Responsive design** that works on all screen sizes
+- **Victory celebration** with completion statistics
+
+### 📱 Responsive Design
+- **Mobile-first approach** with flexible grid layout
+- **Adaptive card sizes** that scale with screen size
+- **Touch-friendly interactions** for mobile devices
+- **Optimized for tablets and desktops**
+
+### ♿ Accessibility Features
+- **Keyboard navigation** (Tab, Enter, Space)
+- **Screen reader support** with proper ARIA labels
+- **Focus indicators** for keyboard users
+- **Reduced motion support** for users with motion sensitivity
+- **High contrast design** for better visibility
+
+## 🚀 How to Play
+
+1. **Click or tap** on any card to flip it
+2. **Find matching pairs** by remembering card positions
+3. **Complete all 8 pairs** to win the game
+4. **Press 'R' key** to restart at any time
+
+## 🎯 Controls
+
+- **Mouse/Touch**: Click or tap cards to flip
+- **Keyboard**: 
+  - `Tab` to navigate between cards
+  - `Enter` or `Space` to flip selected card
+  - `R` to restart the game
