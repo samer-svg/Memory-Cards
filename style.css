@@ -1,82 +1,420 @@
+/* Modern Hangman Game Styles */
 * {
-  padding: 0;
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 body {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #6563ff;
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ffd23f 100%);
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
 }
-.wrapper {
-  height: 450px;
-  width: 450px;
-  background: whitesmoke;
-  border-radius: 10px;
-  padding: 15px;
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  pointer-events: none;
 }
-.cards {
-  height: 100%;
+
+.container {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  max-width: 1000px;
   width: 100%;
-  flex-wrap: wrap;
+  min-height: 600px;
+  gap: 40px;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
 }
-.cards, .card, .view {
+
+.hangman-box {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.hangman-box h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hangman-box img {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hangman-box img:hover {
+  transform: scale(1.05);
+}
+
+.game-box {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.word-display {
+  display: flex;
+  gap: 12px;
+  list-style: none;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.word-display .letter {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  width: 50px;
+  height: 60px;
+  border-bottom: 4px solid #34495e;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.cards .card {
-  cursor: pointer;
-  height: calc(100% / 4 - 10px);
-  width: calc(100% / 4 - 10px);
-  margin: 5px;
+  color: #2c3e50;
+  transition: all 0.3s ease;
   position: relative;
-  perspective: 1000px;
-  transform-style: preserve-3d;
 }
-.card.shake {
-  animation: shake .4s ease-in-out;
+
+.word-display .guessed {
+  border-color: #27ae60;
+  color: #27ae60;
+  animation: letterReveal 0.5s ease-out;
 }
-@keyframes shake {
-  0% , 100% {
-    transform: translateX(0);
+
+@keyframes letterReveal {
+  0% {
+    transform: scale(0) rotate(180deg);
+    opacity: 0;
   }
-  20%, 60% {
-    transform: translateX(13px);
-  }
-  40% , 80% {
-    transform: translateX(-13px);
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
   }
 }
-.card .view {
+
+.game-box h4 {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #34495e;
+  margin-bottom: 10px;
+  padding: 15px;
+  background: rgba(52, 73, 94, 0.1);
+  border-radius: 12px;
+  border-left: 4px solid #ff6b35;
+}
+
+.game-box .guesses-text {
+  background: rgba(231, 76, 60, 0.1);
+  border-left-color: #e74c3c;
+}
+
+.game-box .guesses-text b {
+  color: #e74c3c;
+  font-weight: 700;
+  margin: 0 5px;
+  letter-spacing: 1px;
+}
+
+.keyboard {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.keyboard button {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+  cursor: pointer;
+  outline: none;
+  border-radius: 12px;
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+  text-transform: uppercase;
+}
+
+.keyboard button:hover:not([disabled]) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+  background: linear-gradient(135deg, #2980b9 0%, #1f5f8b 100%);
+}
+
+.keyboard button[disabled] {
+  opacity: 0.6;
+  pointer-events: none;
+  background: #bdc3c7;
+  box-shadow: none;
+  transform: scale(0.95);
+}
+
+.game-model {
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
   width: 100%;
   height: 100%;
-  background: #fff;
-  border-radius: 5px;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.25);
-  user-select: none;
-  pointer-events: none;
-  position: absolute;
-  backface-visibility: hidden;
-  transition: transform 0.3s linear;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  top: 0;
+  left: 0;
 }
-.card .front-view {
-  background: whitesmoke;
-  color: #6563ff;
-  font-size: 54px;
+
+.show {
+  opacity: 1;
+  pointer-events: auto;
 }
-.card .back-view {
-  transform: rotateY(180deg);
+
+.game-model .content {
+  background: white;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  transform: scale(0.8);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
-.card.flip .front-view {
-  transform: rotateY(180deg);
+
+.show .content {
+  transform: scale(1);
 }
-.card.flip .back-view {
-  transform: rotateY(0);
+
+.game-model img {
+  max-width: 150px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
-.card .back-view img {
-  max-width: 45px;
+
+.game-model h4 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.game-model p {
+  font-size: 1.3rem;
+  margin: 20px 0 30px;
+  font-weight: 500;
+  color: #34495e;
+  line-height: 1.5;
+}
+
+.game-model p b {
+  color: #ff6b35;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.game-model button {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.game-model button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(255, 107, 53, 0.4);
+  background: linear-gradient(135deg, #f7931e 0%, #ff6b35 100%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+  
+  .container {
+    flex-direction: column;
+    padding: 30px 20px;
+    gap: 30px;
+    min-height: auto;
+  }
+  
+  .hangman-box h2 {
+    font-size: 2rem;
+  }
+  
+  .hangman-box img {
+    max-width: 250px;
+  }
+  
+  .game-box {
+    padding: 0;
+    gap: 25px;
+  }
+  
+  .word-display .letter {
+    width: 40px;
+    height: 50px;
+    font-size: 2rem;
+  }
+  
+  .keyboard button {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+  }
+  
+  .game-model .content {
+    padding: 30px 20px;
+  }
+  
+  .game-model h4 {
+    font-size: 1.8rem;
+  }
+  
+  .game-model p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px 15px;
+    gap: 20px;
+  }
+  
+  .hangman-box h2 {
+    font-size: 1.8rem;
+  }
+  
+  .hangman-box img {
+    max-width: 200px;
+  }
+  
+  .word-display {
+    gap: 8px;
+  }
+  
+  .word-display .letter {
+    width: 35px;
+    height: 45px;
+    font-size: 1.8rem;
+  }
+  
+  .keyboard {
+    gap: 6px;
+  }
+  
+  .keyboard button {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  .game-box h4 {
+    font-size: 1.1rem;
+    padding: 12px;
+  }
+  
+  .game-model .content {
+    padding: 25px 15px;
+  }
+  
+  .game-model h4 {
+    font-size: 1.6rem;
+  }
+  
+  .game-model p {
+    font-size: 1rem;
+  }
+  
+  .game-model button {
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .container {
+    background: rgba(44, 62, 80, 0.95);
+    color: white;
+  }
+  
+  .hangman-box h2 {
+    color: #ecf0f1;
+  }
+  
+  .word-display .letter {
+    color: #ecf0f1;
+    border-bottom-color: #ecf0f1;
+  }
+  
+  .game-box h4 {
+    color: #ecf0f1;
+    background: rgba(236, 240, 241, 0.1);
+  }
+  
+  .game-model .content {
+    background: #2c3e50;
+    color: white;
+  }
+  
+  .game-model h4,
+  .game-model p {
+    color: #ecf0f1;
+  }
 }
