@@ -4,7 +4,7 @@ A modern, responsive, and accessible memory card game built with vanilla JavaScr
 
  🌐 Live Demo
 
-**Play the game online:** [Memory Card Game on Vercel]([https://memory-cards-samer-ayznwnfhk-sameralyaghn547-2144s-projects.vercel.app/](https://memory-cards-samer.vercel.app/))
+**Play the game online:** [Memory Card Game on Vercel](https://memory-cards-samer.vercel.app/)
 
 ## ✨ Features
 
