@@ -512,8 +512,7 @@ body::before {
 }
 
 .card:focus {
-  outline: 3px solid #00b894;
-  outline-offset: 2px;
+  outline: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
